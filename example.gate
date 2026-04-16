@@ -1,0 +1,57 @@
+import "shared/notify.gate"
+
+// Deploy workflow example
+enum Env {
+    dev,
+    staging,
+    prod
+}
+
+struct Deploy {
+    message: string,
+    env: string = "prod",
+    platforms: list = [github, gitlab]
+}
+
+workflow release(version: string, env: Env = Env.prod) {
+    confirmed = confirm("Deploy {version} to {env}?")
+
+    save("chore: release {version}")
+    tag.create(version)
+
+    for platform in platforms {
+        sync(push: true)
+    }
+
+    snapshot.create("release-{version}")
+    notify("Release {version} complete")
+
+    on_error {
+        snapshot.restore("release-{version}")
+        notify.to("slack", "Release {version} failed on {env}")
+    }
+}
+
+workflow bump_and_release() {
+    version = semver.bump(minor)
+    release(version)
+}
+
+/*
+    Async multi-platform deploy
+*/
+workflow deploy_all(message: string) {
+    futures = []
+    timeout: duration = 30s
+
+    for platform in platforms {
+        f = async sync(push: true)
+        futures.push(f)
+    }
+
+    await all(futures) timeout 30s
+
+    on_timeout {
+        notify.to("slack", "Deploy timed out after {timeout}")
+    }
+}

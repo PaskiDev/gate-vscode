@@ -1,6 +1,6 @@
 {
   "name": "gate-language",
-  "displayName": "Gate Language Support",
+  "displayName": "Gate Workflow Language",
   "description": "Syntax highlighting for the Gate workflow language (.gate files)",
   "version": "0.1.0",
   "publisher": "paskidev",
