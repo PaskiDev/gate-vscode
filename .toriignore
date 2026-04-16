@@ -1,0 +1,28 @@
+# Torii ignore file — controls what torii tracks and snapshots
+# Syntax is identical to .gitignore
+
+# Build output
+/target
+/build
+/dist
+
+# Dependencies
+node_modules/
+.bun/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Torii local config
+.torii/
+
+# OS & editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

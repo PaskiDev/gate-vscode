@@ -1,0 +1,50 @@
+{
+  "name": "gate-language",
+  "displayName": "Gate Language Support",
+  "description": "Syntax highlighting for the Gate workflow language (.gate files)",
+  "version": "0.1.0",
+  "publisher": "paskidev",
+  "icon": "icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/paskidev/gate-vscode"
+  },
+  "homepage": "https://gitorii.com",
+  "keywords": [
+    "gate",
+    "torii",
+    "vcs",
+    "workflow",
+    "git",
+    "syntax"
+  ],
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "gate",
+        "aliases": [
+          "Gate",
+          "gate"
+        ],
+        "extensions": [
+          ".gate"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "gate",
+        "scopeName": "source.gate",
+        "path": "./syntaxes/gate.tmLanguage.json"
+      }
+    ]
+  }
+}

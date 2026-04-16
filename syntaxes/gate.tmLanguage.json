@@ -1,0 +1,208 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Gate",
+  "scopeName": "source.gate",
+  "fileTypes": ["gate"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#native-functions" },
+    { "include": "#constants" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#workflow-declaration" },
+    { "include": "#struct-declaration" },
+    { "include": "#enum-declaration" },
+    { "include": "#impl-declaration" },
+    { "include": "#fn-declaration" },
+    { "include": "#identifiers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.gate",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.gate",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.gate" }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.gate",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.gate",
+          "match": "\\\\."
+        },
+        {
+          "name": "meta.embedded.expression.gate",
+          "begin": "\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.embedded.begin.gate" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.section.embedded.end.gate" }
+          },
+          "patterns": [
+            { "include": "#identifiers" },
+            {
+              "name": "keyword.operator.accessor.gate",
+              "match": "\\."
+            }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.gate",
+          "match": "\\b(if|else|for|in|return)\\b"
+        },
+        {
+          "name": "keyword.declaration.gate",
+          "match": "\\b(workflow|struct|impl|fn|enum|import)\\b"
+        },
+        {
+          "name": "keyword.operator.async.gate",
+          "match": "\\b(async|await)\\b"
+        },
+        {
+          "name": "keyword.other.gate",
+          "match": "\\b(timeout|on_error|on_timeout|self)\\b"
+        }
+      ]
+    },
+    "types": {
+      "name": "support.type.gate",
+      "match": "\\b(string|number|bool|list|map|version|path|url|regex|bytes|date|datetime|duration|future|channel)\\b"
+    },
+    "native-functions": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.gate",
+          "match": "\\b(print|input|confirm|notify|all)\\b(?=\\s*[.(])"
+        },
+        {
+          "name": "support.class.gate",
+          "match": "\\b(save|sync|ls|show|log|diff|status)\\b(?=\\s*[.(])"
+        },
+        {
+          "name": "variable.other.object.gate",
+          "match": "\\b(branch|tag|snapshot|mirror|remote|scan|history|repo|semver|channel|notify)\\b(?=\\.)"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.gate",
+          "match": "\\b(true|false|null)\\b"
+        },
+        {
+          "name": "constant.language.platform.gate",
+          "match": "\\b(github|gitlab|codeberg|gitea|forgejo)\\b"
+        },
+        {
+          "name": "constant.language.semver-part.gate",
+          "match": "\\b(major|minor|patch)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.duration.gate",
+          "match": "\\b[0-9]+(\\.?[0-9]+)?(s|m|h|d)\\b"
+        },
+        {
+          "name": "constant.numeric.date.gate",
+          "match": "\\b[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}:[0-9]{2})?\\b"
+        },
+        {
+          "name": "constant.numeric.semver.gate",
+          "match": "\\b[0-9]+\\.[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.float.gate",
+          "match": "\\b[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.gate",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.gate",
+          "match": "(==|!=|>=|<=|>|<)"
+        },
+        {
+          "name": "keyword.operator.assignment.gate",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.logical.gate",
+          "match": "\\b(and|or|not)\\b"
+        },
+        {
+          "name": "keyword.operator.type-annotation.gate",
+          "match": ":"
+        }
+      ]
+    },
+    "workflow-declaration": {
+      "match": "\\b(workflow)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+      "captures": {
+        "1": { "name": "keyword.declaration.gate" },
+        "2": { "name": "entity.name.function.gate" }
+      }
+    },
+    "struct-declaration": {
+      "match": "\\b(struct)\\s+([A-Z][a-zA-Z0-9_]*)\\b",
+      "captures": {
+        "1": { "name": "keyword.declaration.gate" },
+        "2": { "name": "entity.name.type.gate" }
+      }
+    },
+    "enum-declaration": {
+      "match": "\\b(enum)\\s+([A-Z][a-zA-Z0-9_]*)\\b",
+      "captures": {
+        "1": { "name": "keyword.declaration.gate" },
+        "2": { "name": "entity.name.type.gate" }
+      }
+    },
+    "impl-declaration": {
+      "match": "\\b(impl)\\s+([A-Z][a-zA-Z0-9_]*)\\b",
+      "captures": {
+        "1": { "name": "keyword.declaration.gate" },
+        "2": { "name": "entity.name.type.gate" }
+      }
+    },
+    "fn-declaration": {
+      "match": "\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+      "captures": {
+        "1": { "name": "keyword.declaration.gate" },
+        "2": { "name": "entity.name.function.gate" }
+      }
+    },
+    "identifiers": {
+      "name": "variable.other.gate",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+    }
+  }
+}
