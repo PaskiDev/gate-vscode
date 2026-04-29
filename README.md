@@ -40,3 +40,7 @@ Install from the VS Code Marketplace (search for "Gate Language") or from the [r
 
 - [Torii](https://gitorii.com) — the Git client Gate is built for
 - [Gate spec](https://gitlab.com/paskidev/gate) — language specification
+
+## Author
+
+Built by **Pasqual Peñalver Collado** ([PaskiDev](https://paski.dev)) — Lead Full Stack Developer in Barcelona. More projects and devlog at [paski.dev](https://paski.dev).
